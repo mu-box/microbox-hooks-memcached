@@ -41,18 +41,18 @@ Vagrant.configure(2) do |config|
   # pull the build image to run tests in
   config.vm.provision "shell", inline: <<-SCRIPT
     echo "Pulling the build image"
-    docker pull nanobox/memcached:1.4 || (docker pull nanobox/memcached:1.4-beta; docker tag nanobox/memcached:1.4-beta nanobox/memcached:1.4)
-    docker pull nanobox/memcached:1.5 || (docker pull nanobox/memcached:1.5-beta; docker tag nanobox/memcached:1.5-beta nanobox/memcached:1.5)
+    docker pull mubox/memcached:1.4 || (docker pull mubox/memcached:1.4-beta; docker tag mubox/memcached:1.4-beta mubox/memcached:1.4)
+    docker pull mubox/memcached:1.5 || (docker pull mubox/memcached:1.5-beta; docker tag mubox/memcached:1.5-beta mubox/memcached:1.5)
   SCRIPT
 
   # create an adhoc network
   config.vm.provision "shell", inline: <<-SCRIPT
-    if [[ ! `docker network ls | grep nanobox` ]]; then
+    if [[ ! `docker network ls | grep microbox` ]]; then
       docker network create \
         --driver=bridge \
         --subnet=192.168.0.0/16 \
         --opt="com.docker.network.driver.mtu=1450" \
-        --opt="com.docker.network.bridge.name=redd0" nanobox
+        --opt="com.docker.network.bridge.name=redd0" microbox
     fi
   SCRIPT
 end
